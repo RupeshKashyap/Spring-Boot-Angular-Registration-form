@@ -1,0 +1,5 @@
+package com.example.RegistrationApplication.repository;
+
+public class RegistrationRepository {
+
+}

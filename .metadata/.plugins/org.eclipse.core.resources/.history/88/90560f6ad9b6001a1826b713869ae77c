@@ -1,0 +1,27 @@
+package com.example.RegistrationApplication.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
+@Entity
+public class UserInfo {
+    @Id
+    private Integer id;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String address;
+
+    private String email;
+
+    private String gender;
+
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date dob;
+}

@@ -1,0 +1,22 @@
+package com.example.RegistrationApplication.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.RegistrationApplication.model.UserInfo;
+import com.example.RegistrationApplication.service.serviceImpl.RegistrationServiceImpl;
+
+import antlr.collections.List;
+
+public interface RegistrationService {
+	
+	public List getAllUser();
+
+	public UserInfo save(UserInfo userInfo);
+	
+	public UserInfo getUserById(Integer id);
+	
+	public void deleteUser(Integer id);
+	
+	public UserInfo updateUser(UserInfo userInfo);
+	
+}

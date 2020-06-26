@@ -1,0 +1,106 @@
+package com.example.RegistrationApplication.controller;
+import java.util.List;
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.RegistrationApplication.RegistrationApplication;
+import com.example.RegistrationApplication.model.UserInfo;
+import com.example.RegistrationApplication.service.RegistrationService;
+
+
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/registration")
+public class RegistrationController {
+	private static final Logger LOGGER = Logger.getLogger(RegistrationController.class.getName());
+
+	@Autowired 
+	RegistrationService registrationService;
+
+	@GetMapping()
+	public ResponseEntity getAllUser() {
+		try {
+			List list =  (List)registrationService.getAllUser();
+			if(!list.isEmpty())
+				return ResponseEntity.ok(list);
+
+			return ResponseEntity.noContent().build();
+		}catch(Exception ex ) {
+			LOGGER.info("exception "+ ex);
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity saveUser(@RequestBody @Validated UserInfo userInfo) {
+
+		try {
+			UserInfo  user =  registrationService.save(userInfo);
+			return ResponseEntity.ok(user);
+		}catch(Exception ex){
+			LOGGER.info("exception "+ ex);
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
+	@GetMapping(value = "/delete" )
+	public ResponseEntity getUserById(@RequestParam("id")Integer id) {
+		try {
+
+			UserInfo  user =  registrationService.getUserById(id);
+			if(user != null) {
+				return ResponseEntity.ok(user);
+			}else {
+				return ResponseEntity.noContent().build();
+			}
+		}catch(Exception ex) {
+			LOGGER.info("exception "+ ex);
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@DeleteMapping(value ="/{id}")
+	public ResponseEntity deleteUser(@PathVariable("id") Integer id){
+		LOGGER.info("Id = "+id);
+		try {
+			registrationService.deleteUser(id);
+
+			return ResponseEntity.ok().build();
+		}catch(Exception ex) {
+			LOGGER.info("exception "+ ex);
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity updateUser(@RequestBody UserInfo userInfo) {
+		try {
+			UserInfo  user =  registrationService.save(userInfo);
+
+			return ResponseEntity.ok(user);
+		}catch(Exception ex) {
+			LOGGER.info("exception "+ ex);
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+
+}

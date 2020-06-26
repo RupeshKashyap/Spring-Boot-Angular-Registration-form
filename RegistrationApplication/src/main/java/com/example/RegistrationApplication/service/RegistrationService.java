@@ -1,0 +1,20 @@
+package com.example.RegistrationApplication.service;
+
+import java.util.ArrayList;
+
+import com.example.RegistrationApplication.model.UserInfo;
+
+
+public interface RegistrationService {
+
+	public ArrayList<UserInfo> getAllUser();
+
+	public UserInfo save(UserInfo userInfo);
+
+	public UserInfo getUserById(Integer id);
+
+	public void deleteUser(Integer id);
+
+	public UserInfo updateUser(UserInfo userInfo);
+
+}

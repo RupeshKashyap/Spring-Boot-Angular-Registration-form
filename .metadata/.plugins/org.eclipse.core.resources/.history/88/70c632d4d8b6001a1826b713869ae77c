@@ -1,0 +1,5 @@
+package com.example.RegistrationApplication.service.serviceImpl;
+
+public class RegistrationServiceImpl {
+
+}
